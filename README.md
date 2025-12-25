@@ -1,0 +1,1 @@
+# minek_max_bot_mini_app
