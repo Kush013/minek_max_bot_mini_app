@@ -1,0 +1,817 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Гиды в РФ: требования и сертификация</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: -apple-system, system-ui, sans-serif;
+        }
+        body {
+            background: linear-gradient(135deg, #f0f7ff 0%, #e6f7ff 100%);
+            color: #333;
+            min-height: 100vh;
+        }
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 16px;
+        }
+        /* Шапка */
+        .header {
+            background: linear-gradient(135deg, #1e3a8a 0%, #3b82f6 100%);
+            color: white;
+            padding: 30px 20px;
+            border-radius: 0 0 25px 25px;
+            margin-bottom: 24px;
+            box-shadow: 0 6px 20px rgba(30, 58, 138, 0.15);
+            position: relative;
+            overflow: hidden;
+        }
+        .header::before {
+            content: "🗺️";
+            position: absolute;
+            font-size: 120px;
+            opacity: 0.1;
+            right: 20px;
+            top: 10px;
+        }
+        .header h1 {
+            font-size: 24px;
+            font-weight: 700;
+            margin-bottom: 10px;
+            position: relative;
+        }
+        .header .subtitle {
+            font-size: 16px;
+            opacity: 0.9;
+            margin-bottom: 8px;
+        }
+        .header .badge {
+            background: rgba(255, 255, 255, 0.2);
+            padding: 6px 12px;
+            border-radius: 20px;
+            font-size: 14px;
+            display: inline-block;
+            margin-top: 10px;
+        }
+        /* Навигация по категориям */
+        .category-nav {
+            display: flex;
+            overflow-x: auto;
+            gap: 10px;
+            margin-bottom: 20px;
+            padding-bottom: 10px;
+            scrollbar-width: none;
+        }
+        .category-nav::-webkit-scrollbar {
+            display: none;
+        }
+        .category-btn {
+            background: white;
+            border: 2px solid #3b82f6;
+            color: #1e3a8a;
+            padding: 12px 20px;
+            border-radius: 15px;
+            font-size: 14px;
+            font-weight: 600;
+            cursor: pointer;
+            white-space: nowrap;
+            transition: all 0.3s ease;
+            flex-shrink: 0;
+        }
+        .category-btn.active {
+            background: #3b82f6;
+            color: white;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(59, 130, 246, 0.3);
+        }
+        .category-btn:hover:not(.active) {
+            background: #f0f7ff;
+        }
+        /* Основной контент */
+        .content-card {
+            background: white;
+            border-radius: 20px;
+            padding: 25px;
+            margin-bottom: 20px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05);
+            border: 1px solid rgba(59, 130, 246, 0.1);
+        }
+        .category-content {
+            display: none;
+        }
+        .category-content.active {
+            display: block;
+            animation: fadeIn 0.5s ease;
+        }
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        .section {
+            margin-bottom: 30px;
+        }
+        .section h3 {
+            color: #1e3a8a;
+            font-size: 20px;
+            margin-bottom: 15px;
+            padding-bottom: 10px;
+            border-bottom: 2px solid #e0f2fe;
+            display: flex;
+            align-items: center;
+        }
+        .section h3::before {
+            margin-right: 10px;
+            font-size: 24px;
+        }
+        .requirements h3::before {
+            content: "📋";
+        }
+        .certification h3::before {
+            content: "🎓";
+        }
+        .documents h3::before {
+            content: "📄";
+        }
+        .responsibilities h3::before {
+            content: "⚖️";
+        }
+        .opportunities h3::before {
+            content: "💼";
+        }
+        .regions h3::before {
+            content: "🗺️";
+        }
+        .section p {
+            font-size: 16px;
+            line-height: 1.6;
+            color: #424242;
+            margin-bottom: 12px;
+        }
+        /* Списки требований */
+        .requirement-list {
+            list-style: none;
+            margin: 15px 0;
+        }
+        .requirement-item {
+            display: flex;
+            align-items: flex-start;
+            margin-bottom: 12px;
+            padding: 12px;
+            background: #f0f9ff;
+            border-radius: 12px;
+            border-left: 4px solid #3b82f6;
+        }
+        .req-icon {
+            font-size: 20px;
+            margin-right: 15px;
+            flex-shrink: 0;
+        }
+        .req-content h4 {
+            color: #1e3a8a;
+            margin-bottom: 5px;
+            font-size: 16px;
+        }
+        .req-content p {
+            font-size: 15px;
+            color: #555;
+            margin-bottom: 0;
+        }
+        /* Инфо-блоки */
+        .info-box {
+            background: linear-gradient(135deg, #e0f2fe 0%, #f0f9ff 100%);
+            border-radius: 15px;
+            padding: 20px;
+            margin: 20px 0;
+            border-left: 5px solid #0ea5e9;
+        }
+        .info-box h4 {
+            color: #0369a1;
+            margin-bottom: 10px;
+            display: flex;
+            align-items: center;
+        }
+        .info-box h4::before {
+            content: "ℹ️";
+            margin-right: 10px;
+        }
+        .warning-box {
+            background: #fff7ed;
+            border-radius: 15px;
+            padding: 20px;
+            margin: 20px 0;
+            border-left: 5px solid #f97316;
+        }
+        .warning-box h4 {
+            color: #c2410c;
+            margin-bottom: 10px;
+            display: flex;
+            align-items: center;
+        }
+        .warning-box h4::before {
+            content: "⚠️";
+            margin-right: 10px;
+        }
+        /* Таблица регионов */
+        .regions-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 15px 0;
+            background: white;
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 3px 10px rgba(0, 0, 0, 0.05);
+        }
+        .regions-table th {
+            background: #3b82f6;
+            color: white;
+            padding: 12px 15px;
+            text-align: left;
+            font-weight: 600;
+        }
+        .regions-table td {
+            padding: 12px 15px;
+            border-bottom: 1px solid #e5e7eb;
+        }
+        .regions-table tr:last-child td {
+            border-bottom: none;
+        }
+        .regions-table tr:hover {
+            background: #f0f9ff;
+        }
+        /* Кнопки действий */
+        .actions {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+            margin-top: 25px;
+        }
+        .action-button {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 18px 20px;
+            border-radius: 15px;
+            font-size: 17px;
+            font-weight: 600;
+            text-decoration: none;
+            transition: all 0.3s ease;
+            border: none;
+            cursor: pointer;
+            text-align: center;
+        }
+        .action-button .icon {
+            margin-right: 12px;
+            font-size: 20px;
+        }
+        .primary-button {
+            background: linear-gradient(135deg, #3b82f6 0%, #1d4ed8 100%);
+            color: white;
+            box-shadow: 0 4px 15px rgba(59, 130, 246, 0.3);
+        }
+        .primary-button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(59, 130, 246, 0.4);
+        }
+        .secondary-button {
+            background: white;
+            color: #1e3a8a;
+            border: 2px solid #3b82f6;
+        }
+        .secondary-button:hover {
+            background: #f0f7ff;
+            transform: translateY(-2px);
+        }
+        /* Подвал */
+        .footer {
+            text-align: center;
+            padding: 25px 20px;
+            color: #666;
+            font-size: 14px;
+            border-top: 1px solid #e0e0e0;
+            margin-top: 30px;
+        }
+        .footer-links {
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+            margin-top: 15px;
+        }
+        .footer-link {
+            color: #3b82f6;
+            text-decoration: none;
+            font-size: 13px;
+        }
+        .footer-link:hover {
+            text-decoration: underline;
+        }
+        /* Адаптивность */
+        @media (max-width: 600px) {
+            .container {
+                padding: 12px;
+            }
+            .header h1 {
+                font-size: 20px;
+            }
+            .category-btn {
+                padding: 10px 15px;
+                font-size: 13px;
+            }
+            .action-button {
+                padding: 16px;
+                font-size: 16px;
+            }
+            .regions-table {
+                font-size: 14px;
+            }
+            .regions-table th,
+            .regions-table td {
+                padding: 8px 10px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <!-- Шапка -->
+        <header class="header">
+            <h1>🗺️ Профессия "Гид" в Российской Федерации</h1>
+            <div class="subtitle">Полное руководство по требованиям, сертификации и возможностям работы</div>
+            <div class="badge">Актуально на 2025 год</div>
+        </header>
+
+        <!-- Навигация по категориям -->
+        <nav class="category-nav">
+            <button class="category-btn active" data-category="requirements">Основные требования</button>
+            <button class="category-btn" data-category="certification">Сертификация</button>
+            <button class="category-btn" data-category="documents">Документы</button>
+            <button class="category-btn" data-category="responsibilities">Обязанности</button>
+            <button class="category-btn" data-category="opportunities">Возможности</button>
+            <button class="category-btn" data-category="regions">Регионы работы</button>
+        </nav>
+
+        <!-- Основной контент -->
+        <div class="content-card">
+            <!-- Категория 1: Основные требования -->
+            <div class="category-content requirements active" id="requirements">
+                <div class="section">
+                    <h3>📋 Основные требования к гидам</h3>
+                    <p>Согласно Федеральному закону №132-ФЗ "Об основах туристской деятельности в Российской Федерации", к работе гидом допускаются лица, соответствующие следующим требованиям:</p>
+
+                    <ul class="requirement-list">
+                        <li class="requirement-item">
+                            <div class="req-icon">🎓</div>
+                            <div class="req-content">
+                                <h4>Образование</h4>
+                                <p>Высшее или среднее профессиональное образование в сфере туризма, истории, культурологии, либо переподготовка по программе "Гид-переводчик"</p>
+                            </div>
+                        </li>
+                        <li class="requirement-item">
+                            <div class="req-icon">🗣️</div>
+                            <div class="req-content">
+                                <h4>Знание языков</h4>
+                                <p>Свободное владение русским языком и хотя бы одним иностранным языком (для гидов-переводчиков)</p>
+                            </div>
+                        </li>
+                        <li class="requirement-item">
+                            <div class="req-icon">📚</div>
+                            <div class="req-content">
+                                <h4>Специализация</h4>
+                                <p>Углубленные знания по выбранному направлению (история, архитектура, искусство, природа региона)</p>
+                            </div>
+                        </li>
+                        <li class="requirement-item">
+                            <div class="req-icon">✅</div>
+                            <div class="req-content">
+                                <h4>Сертификат</h4>
+                                <p>Наличие квалификационного сертификата, выданного аккредитованной организацией</p>
+                            </div>
+                        </li>
+                        <li class="requirement-item">
+                            <div class="req-icon">👤</div>
+                            <div class="req-content">
+                                <h4>Личные качества</h4>
+                                <p>Коммуникабельность, стрессоустойчивость, хорошая дикция, презентабельный внешний вид</p>
+                            </div>
+                        </li>
+                    </ul>
+                </div>
+
+                <div class="info-box">
+                    <h4>Важная информация</h4>
+                    <p>С 2023 года введена обязательная аккредитация гидов и экскурсоводов в едином реестре Минкультуры России. Работа без аккредитации запрещена.</p>
+                </div>
+            </div>
+
+            <!-- Категория 2: Сертификация -->
+            <div class="category-content certification" id="certification">
+                <div class="section">
+                    <h3>🎓 Процесс сертификации гидов</h3>
+                    <p>Для получения права работать гидом необходимо пройти процедуру сертификации:</p>
+
+                    <div class="requirement-list">
+                        <div class="requirement-item">
+                            <div class="req-icon">1️⃣</div>
+                            <div class="req-content">
+                                <h4>Обучение</h4>
+                                <p>Пройти обучение в аккредитованной образовательной организации (от 250 часов)</p>
+                            </div>
+                        </div>
+                        <div class="requirement-item">
+                            <div class="req-icon">2️⃣</div>
+                            <div class="req-content">
+                                <h4>Экзамен</h4>
+                                <p>Сдать квалификационный экзамен по теории и практике экскурсионной деятельности</p>
+                            </div>
+                        </div>
+                        <div class="requirement-item">
+                            <div class="req-icon">3️⃣</div>
+                            <div class="req-content">
+                                <h4>Аттестация</h4>
+                                <p>Пройти аттестацию в региональном органе по туризму</p>
+                            </div>
+                        </div>
+                        <div class="requirement-item">
+                            <div class="req-icon">4️⃣</div>
+                            <div class="req-content">
+                                <h4>Регистрация</h4>
+                                <p>Внесение в единый реестр гидов и экскурсоводов Минкультуры России</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="info-box">
+                    <h4>Стоимость сертификации</h4>
+                    <p>Стоимость обучения и сертификации варьируется от 25,000 до 80,000 рублей в зависимости от региона и программы. Некоторые регионы предоставляют субсидии на переподготовку.</p>
+                </div>
+            </div>
+
+            <!-- Категория 3: Документы -->
+            <div class="category-content documents" id="documents">
+                <div class="section">
+                    <h3>📄 Необходимые документы</h3>
+                    <p>Для оформления аккредитации гида потребуются следующие документы:</p>
+
+                    <div class="requirement-list">
+                        <div class="requirement-item">
+                            <div class="req-icon">📝</div>
+                            <div class="req-content">
+                                <h4>Заявление</h4>
+                                <p>Заявление установленного образца на аккредитацию</p>
+                            </div>
+                        </div>
+                        <div class="requirement-item">
+                            <div class="req-icon">🆔</div>
+                            <div class="req-content">
+                                <h4>Паспорт</h4>
+                                <p>Копия паспорта гражданина РФ</p>
+                            </div>
+                        </div>
+                        <div class="requirement-item">
+                            <div class="req-icon">🎓</div>
+                            <div class="req-content">
+                                <h4>Документы об образовании</h4>
+                                <p>Копии дипломов, сертификатов о прохождении курсов</p>
+                            </div>
+                        </div>
+                        <div class="requirement-item">
+                            <div class="req-icon">🏥</div>
+                            <div class="req-content">
+                                <h4>Медицинская справка</h4>
+                                <p>Справка об отсутствии противопоказаний</p>
+                            </div>
+                        </div>
+                        <div class="requirement-item">
+                            <div class="req-icon">📸</div>
+                            <div class="req-content">
+                                <h4>Фотографии</h4>
+                                <p>3 фотографии 3×4 см</p>
+                            </div>
+                        </div>
+                        <div class="requirement-item">
+                            <div class="req-icon">💳</div>
+                            <div class="req-content">
+                                <h4>Квитанция</h4>
+                                <p>Квитанция об оплате госпошлины (3,500 рублей)</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Категория 4: Обязанности -->
+            <div class="category-content responsibilities" id="responsibilities">
+                <div class="section">
+                    <h3>⚖️ Обязанности и ответственность гида</h3>
+
+                    <div class="requirement-list">
+                        <div class="requirement-item">
+                            <div class="req-icon">👥</div>
+                            <div class="req-content">
+                                <h4>Проведение экскурсий</h4>
+                                <p>Организация и проведение экскурсий согласно утвержденным маршрутам и программам</p>
+                            </div>
+                        </div>
+                        <div class="requirement-item">
+                            <div class="req-icon">🛡️</div>
+                            <div class="req-content">
+                                <h4>Безопасность туристов</h4>
+                                <p>Обеспечение безопасности туристов во время экскурсии</p>
+                            </div>
+                        </div>
+                        <div class="requirement-item">
+                            <div class="req-icon">💬</div>
+                            <div class="req-content">
+                                <h4>Информирование</h4>
+                                <p>Предоставление достоверной информации о культурных и исторических объектах</p>
+                            </div>
+                        </div>
+                        <div class="requirement-item">
+                            <div class="req-icon">📊</div>
+                            <div class="req-content">
+                                <h4>Отчетность</h4>
+                                <p>Ведение учетной документации и отчетности</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="warning-box">
+                    <h4>Ответственность</h4>
+                    <p>Гид несет ответственность за достоверность предоставляемой информации. За нарушение профессиональных стандартов предусмотрены штрафы от 10,000 до 50,000 рублей, а также приостановка или аннулирование аккредитации.</p>
+                </div>
+            </div>
+
+            <!-- Категория 5: Возможности -->
+            <div class="category-content opportunities" id="opportunities">
+                <div class="section">
+                    <h3>💼 Возможности для работы и доход</h3>
+
+                    <div class="requirement-list">
+                        <div class="requirement-item">
+                            <div class="req-icon">🏢</div>
+                            <div class="req-content">
+                                <h4>Туристические компании</h4>
+                                <p>Штатная позиция в турфирме (стабильный доход, социальный пакет)</p>
+                            </div>
+                        </div>
+                        <div class="requirement-item">
+                            <div class="req-icon">🚶</div>
+                            <div class="req-content">
+                                <h4>Фриланс</h4>
+                                <p>Самостоятельная работа через онлайн-платформы (высокий доход, гибкий график)</p>
+                            </div>
+                        </div>
+                        <div class="requirement-item">
+                            <div class="req-icon">🏛️</div>
+                            <div class="req-content">
+                                <h4>Музеи и учреждения культуры</h4>
+                                <p>Работа в государственных и частных музеях, галереях</p>
+                            </div>
+                        </div>
+                        <div class="requirement-item">
+                            <div class="req-icon">👑</div>
+                            <div class="req-content">
+                                <h4>VIP-услуги</h4>
+                                <p>Индивидуальные экскурсии для корпоративных клиентов и VIP-туристов</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="info-box">
+                        <h4>Уровень дохода</h4>
+                        <p>Средний доход гида в России (2025 год):<br>
+                        • Начинающий гид: 40,000 - 60,000 руб./мес<br>
+                        • Опытный гид: 80,000 - 120,000 руб./мес<br>
+                        • VIP-гид: от 150,000 руб./мес<br>
+                        • Сезонный доход в курортных регионах может достигать 200,000+ руб./мес</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Категория 6: Регионы работы -->
+            <div class="category-content regions" id="regions">
+                <div class="section">
+                    <h3>🗺️ Регионы с высоким спросом на гидов</h3>
+
+                    <table class="regions-table">
+                        <thead>
+                            <tr>
+                                <th>Регион</th>
+                                <th>Специализация</th>
+                                <th>Сезонность</th>
+                                <th>Средний доход</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td><strong>Москва</strong></td>
+                                <td>История, архитектура, искусство</td>
+                                <td>Круглый год</td>
+                                <td>90,000 - 150,000 ₽</td>
+                            </tr>
+                            <tr>
+                                <td><strong>Санкт-Петербург</strong></td>
+                                <td>Культура, музеи, дворцы</td>
+                                <td>Круглый год (пик: май-сентябрь)</td>
+                                <td>80,000 - 130,000 ₽</td>
+                            </tr>
+                            <tr>
+                                <td><strong>Краснодарский край</strong></td>
+                                <td>Курорты, природа, активный туризм</td>
+                                <td>Сезонный (май-октябрь)</td>
+                                <td>70,000 - 120,000 ₽</td>
+                            </tr>
+                            <tr>
+                                <td><strong>Крым</strong></td>
+                                <td>История, виноделие, природа</td>
+                                <td>Сезонный (апрель-ноябрь)</td>
+                                <td>60,000 - 100,000 ₽</td>
+                            </tr>
+                            <tr>
+                                <td><strong>Золотое кольцо</strong></td>
+                                <td>Православие, история, народные промыслы</td>
+                                <td>Круглый год</td>
+                                <td>50,000 - 90,000 ₽</td>
+                            </tr>
+                            <tr>
+                                <td><strong>Сибирь и Дальний Восток</strong></td>
+                                <td>Экотуризм, этнография, приключения</td>
+                                <td>Летний сезон</td>
+                                <td>70,000 - 110,000 ₽</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+
+                <div class="info-box">
+                    <h4>Перспективные направления</h4>
+                    <p>Наиболее востребованы гиды со знанием китайского, арабского, хинди и испанского языков. Также растет спрос на гидов по промышленному туризму, гастрономическим турам и экологическому туризму.</p>
+                </div>
+            </div>
+
+            <!-- Кнопки действий -->
+            <div class="actions">
+                <a href="https://www.gosuslugi.ru/100037/24"
+                   class="action-button primary-button"
+                   target="_blank">
+                    <span class="icon">📝</span>
+                    <span>Подать заявку на аккредитацию на Госуслугах</span>
+                </a>
+
+                <a href="https://tourism.gov.ru/activity/gidovskaya-deyatelnost/"
+                   class="action-button secondary-button"
+                   target="_blank">
+                    <span class="icon">🏛️</span>
+                    <span>Официальный сайт Ростуризма</span>
+                </a>
+            </div>
+        </div>
+
+        <!-- Подвал -->
+        <footer class="footer">
+            <div class="organization">Информация предоставлена согласно требованиям Минкультуры России и Ростуризма</div>
+            <p>Актуально на 2025 год. Рекомендуется проверять изменения в законодательстве</p>
+
+            <div class="footer-links">
+                <a href="https://base.garant.ru/12131224/" class="footer-link" target="_blank">ФЗ №132 о туристской деятельности</a>
+                <a href="https://docs.cntd.ru/document/561079153" class="footer-link" target="_blank">Профессиональный стандарт "Гид"</a>
+                <a href="https://reestr.mkrf.ru/" class="footer-link" target="_blank">Реестр гидов Минкультуры</a>
+            </div>
+        </footer>
+    </div>
+
+    <!-- Подключение библиотеки MAX -->
+    <script src="https://st.max.ru/js/max-web-app.js"></script>
+
+    <script>
+        // ====== 1. ИНИЦИАЛИЗАЦИЯ ИНТЕРФЕЙСА MAX ======
+        WebApp.ready();
+
+        // Настройка кнопки "Назад"
+        WebApp.BackButton.show();
+        WebApp.BackButton.onClick(() => {
+            WebApp.close();
+        });
+
+        // Включаем подтверждение при закрытии приложения
+        WebApp.enableClosingConfirmation();
+
+        // ====== 2. УПРАВЛЕНИЕ КАТЕГОРИЯМИ ======
+        document.addEventListener('DOMContentLoaded', () => {
+            // Получаем все кнопки категорий
+            const categoryButtons = document.querySelectorAll('.category-btn');
+            const categoryContents = document.querySelectorAll('.category-content');
+
+            // Функция переключения категорий
+            function switchCategory(categoryId) {
+                // Убираем активный класс у всех кнопок
+                categoryButtons.forEach(btn => {
+                    btn.classList.remove('active');
+                });
+
+                // Скрываем все содержимое категорий
+                categoryContents.forEach(content => {
+                    content.classList.remove('active');
+                });
+
+                // Активируем выбранную кнопку
+                const activeButton = document.querySelector(`[data-category="${categoryId}"]`);
+                if (activeButton) {
+                    activeButton.classList.add('active');
+                }
+
+                // Показываем выбранную категорию
+                const activeContent = document.getElementById(categoryId);
+                if (activeContent) {
+                    activeContent.classList.add('active');
+                }
+
+                // Вибрация при переключении
+                if (window.WebApp && WebApp.HapticFeedback) {
+                    WebApp.HapticFeedback.impactOccurred('light', false);
+                }
+
+                // Логирование для аналитики
+                try {
+                    WebApp.logEvent('category_switch', {
+                        category: categoryId,
+                        timestamp: new Date().toISOString()
+                    });
+                } catch (e) {
+                    console.log('Переключена категория:', categoryId);
+                }
+            }
+
+            // Добавляем обработчики на кнопки
+            categoryButtons.forEach(button => {
+                button.addEventListener('click', () => {
+                    const categoryId = button.getAttribute('data-category');
+                    switchCategory(categoryId);
+                });
+            });
+
+            // Добавляем обработчики на кнопки действий
+            const actionButtons = document.querySelectorAll('.action-button');
+            actionButtons.forEach(button => {
+                button.addEventListener('click', (e) => {
+                    if (window.WebApp && WebApp.HapticFeedback) {
+                        WebApp.HapticFeedback.impactOccurred('light', false);
+                    }
+
+                    try {
+                        WebApp.logEvent('external_link_click', {
+                            button_text: button.textContent.trim(),
+                            url: button.href
+                        });
+                    } catch (e) {
+                        console.log('Внешняя ссылка:', button.href);
+                    }
+                });
+            });
+
+            // Активируем первую категорию по умолчанию
+            switchCategory('requirements');
+
+            console.log('Приложение "Гиды в РФ" загружено');
+        });
+
+        // ====== 3. ДОПОЛНИТЕЛЬНЫЕ ФУНКЦИИ ======
+        // Функция для получения текущей даты
+        function getCurrentDate() {
+            const now = new Date();
+            return now.toLocaleDateString('ru-RU', {
+                year: 'numeric',
+                month: 'long',
+                day: 'numeric'
+            });
+        }
+
+        // Обновляем дату в заголовке
+        document.addEventListener('DOMContentLoaded', () => {
+            const dateElement = document.querySelector('.badge');
+            if (dateElement) {
+                dateElement.textContent = `Актуально на ${getCurrentDate()}`;
+            }
+        });
+
+        // Логирование открытия приложения
+        try {
+            WebApp.logEvent('app_opened', {
+                app_name: 'Гиды в РФ: Требования',
+                timestamp: new Date().toISOString(),
+                platform: WebApp.platform
+            });
+        } catch (e) {
+            console.log('Приложение открыто:', getCurrentDate());
+        }
+
+    </script>
+</body>
+</html>
